@@ -1150,7 +1150,7 @@ SDDM_EOF
     
     systemctl enable sddm
     
-    success "SDDM配置完成（将在重启后生效）"
+    success "SDDM configuration completed (will take effect after reboot)"
 }
 
 
