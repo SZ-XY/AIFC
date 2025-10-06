@@ -1357,17 +1357,15 @@ if systemctl is-enabled vmtoolsd &>/dev/null; then
     echo "2. 手动挂载命令：vmhgfs-fuse .host:/ /你想要挂载到的文件夹 -o allow_other"
 fi
 
-# 询问是否安装rEFInd
-read -p "是否为UEFI多系统用户安装rEFInd引导程序？(y/n): " install_refind
-if [[ $install_refind =~ ^[Yy]$ ]]; then
-    if [[ -d /sys/firmware/efi ]]; then
-        echo "正在安装rEFInd..."
+# 只有 UEFI 系统才询问是否安装 rEFInd
+if [[ -d /sys/firmware/efi ]]; then
+    read -p "是否安装 rEFInd 引导程序以更好的选择启动的系统？(y/n): " install_refind
+    if [[ $install_refind =~ ^[Yy]$ ]]; then
+        echo "正在安装 rEFInd..."
         pacman -S --noconfirm refind
         refind-install
-        echo "rEFInd安装完成"
-        echo "注意：rEFInd已安装，如需配置请编辑 /boot/efi/EFI/refind/refind.conf"
-    else
-        echo "当前不是UEFI系统，跳过rEFInd安装。"
+        echo "rEFInd 安装完成"
+        echo "注意：rEFInd 已安装，如需配置请编辑 /boot/efi/EFI/refind/refind.conf"
     fi
 fi
 
