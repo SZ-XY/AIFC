@@ -661,7 +661,6 @@ generate_fstab() {
         fi
     fi
     
-    # 现在清理 fstab（在添加完所有条目后）
     cleanup_fstab
     
     # 验证 fstab
@@ -1053,7 +1052,7 @@ if lspci | grep -i "VGA" | grep -i "AMD" &> /dev/null; then
     fi
 fi
 
-# 检测NVIDIA显卡保持不变
+# NVIDIA显卡不管
 if lspci | grep -i "VGA" | grep -i "NVIDIA" &> /dev/null; then
     info "NVIDIA graphics detected"
     warn "NVIDIA needs manual install, continuing in 3s..."
