@@ -1098,31 +1098,29 @@ if ! pacman -S $desktop_packages --noconfirm; then
     fi
 fi
 
-
-if [ "$desktop_choice" = "1" ]; then
-    info "Setting up SDDM permissions and configuration..."
+setup_sddm() {
+    info "设置SDDM显示管理器..."
     
-
     if ! pacman -Q sddm &>/dev/null; then
-        info "Installing SDDM..."
+        info "安装SDDM..."
         pacman -S sddm --noconfirm
     fi
     
-
+    # 停止服务（如果正在运行）
     systemctl stop sddm 2>/dev/null || true
     
-
+    # 创建必要的目录结构
     mkdir -p /var/lib/sddm
     mkdir -p /var/lib/sddm/.config
     mkdir -p /etc/sddm.conf.d
     
-
+    # 设置正确的权限
     chown -R sddm:sddm /var/lib/sddm
     chmod 755 /var/lib/sddm
     chmod 700 /var/lib/sddm/.config
     
-
-    cat > /etc/sddm.conf << 'SDDM_EOF'
+    # 使用配置文件片段而不是覆盖主配置
+    cat > /etc/sddm.conf.d/arch-installer.conf << 'SDDM_EOF'
 [Autologin]
 Relogin=false
 Session=
@@ -1149,22 +1147,17 @@ HideShells=
 DisplayCommand=/usr/share/sddm/scripts/Xsetup
 DisplayStopCommand=/usr/share/sddm/scripts/Xstop
 SDDM_EOF
-
-    # 设置配置文件权限
-    chmod 644 /etc/sddm.conf
     
-    # 启用并启动 SDDM 服务
     systemctl enable sddm
-    systemctl start sddm
     
-    # 验证服务状态
-    if systemctl is-active sddm &>/dev/null; then
-        success "SDDM configured and started successfully"
-    else
-        warn "SDDM service is not active, but configuration is set"
-        info "SDDM should start automatically on next boot"
-    fi
+    success "SDDM配置完成（将在重启后生效）"
+}
+
+
+if [ "$desktop_choice" = "1" ]; then
+    setup_sddm
 fi
+
 
 if [ "$amd_gpu" = true ]; then
     info "Installing Vulkan support for AMD graphics..."
@@ -1316,18 +1309,6 @@ fi
 
 echo "开始第三阶段安装..."
 
-
-if [ -f /usr/bin/sddm ] && systemctl is-enabled sddm &>/dev/null; then
-    echo "修复 SDDM 权限..."
-    mkdir -p /var/lib/sddm/.config
-    chown -R sddm:sddm /var/lib/sddm
-    chmod 755 /var/lib/sddm
-    chmod 700 /var/lib/sddm/.config
-    
-    systemctl restart sddm 2>/dev/null && echo "SDDM 服务已重启" || echo "无法重启 SDDM，将在下次启动时生效"
-elif [ -f /usr/bin/sddm ]; then
-    echo "检测到 SDDM 但未启用（可能是 GNOME 桌面），跳过 SDDM 配置"
-fi
 
 echo "安装网络管理工具..."
 pacman -S --noconfirm network-manager-applet dnsmasq
