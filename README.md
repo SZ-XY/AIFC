@@ -387,7 +387,7 @@ reboot
 
 1,按下"Win"键(Command)  
 2,如果是KDE Plasma桌面，输入konsole；  
-如果是GNOME桌面，输入ghostty
+如果是GNOME桌面，输入ghostty  
 3,再输入以下代码并执行   
 
 ```
