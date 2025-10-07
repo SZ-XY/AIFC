@@ -386,8 +386,8 @@ reboot
 #### 执行第三阶段脚本
 
 1,按下"Win"键(Command)  
-2,如果是KDE Plasma桌面，输入konsole；  
-如果是GNOME桌面，输入ghostty  
+2,如果是KDE Plasma桌面，输入konsole并打开；  
+如果是GNOME桌面，输入ghostty并打开  
 3,再输入以下代码并执行   
 
 ```
