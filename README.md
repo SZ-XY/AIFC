@@ -1,3 +1,5 @@
+# Arch Installer For Chinese
+
 ## 使用方法
 
 1,进入Arch安装介质(具体步骤请自行搜索)  
