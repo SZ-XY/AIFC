@@ -1,10 +1,8 @@
-# Arch Installer For Chinese
-
 ## 使用方法
 
-1,进入Arch安装介质(具体步骤请自行搜索)  
+**1**,进入Arch安装介质(具体步骤请自行搜索)  
 
-2,明确要作为根分区，交换分区和EFI分区(仅UEFI模式需要)的具体分区名称  
+**2**,明确要作为根分区，交换分区和EFI分区(仅UEFI模式需要)的具体分区名称  
 · 可以输入"lsblk -p"查看分区  
 输出示例：  
 
@@ -15,7 +13,8 @@ NAME          MAJ:MIN RM   SIZE  RO TYPE MOUNTPOINT
 ├─/dev/sda2  8:2     0     8G   0  part [SWAP]
 └─/dev/sda3  8:3     0   91.5G  0  part 
 /dev/sr0      11:0    1    1.5G  0  rom  /run/archiso/bootmnt
-```
+```  
+  
 · 可以通过fdisk管理分区  
 使用方法:  
 
@@ -51,7 +50,8 @@ Command (m for help): n
 Partition number (4-128, default 4):       
 注:回车使用默认,也可以输入一个在区间的数字，这里的默认数字为4，区间为 4-128
 
-First sector (17827840-209715166, default 17827840): 注:这里不用管，回车使用默认
+First sector (17827840-209715166, default 17827840): 
+注:这里不用管，回车使用默认
 
 Last sector, +/-sectors or +/-size{K,M,G,T,P} (17827840-209715166, default 209715166): +20G     
 注:这表示创建分区的大小为20G,也可以回车使用默认(剩下的全部空间)
@@ -60,7 +60,97 @@ Command (m for help): w
 注:之前的操作并没有真正执行，输入q退出后什么也没有变化，输入w才写入，如果不确定，可以输入p验证
 ```
 
-**3,运行AIFC安装脚本**
+**3**,需要网络以下载aifc.sh，这里演示用iwctl连接Wi-Fi  
+第一种方式(交互式)：   
+
+1.启动 iwctl  
+输入以下代码并执行  
+
+```
+iwctl
+```
+
+然后会进入交互式命令行，提示符变为 [iwd]#  
+
+2.查看可用设备  
+
+```
+[iwd]# station list
+```
+
+输出示例：
+
+```
+                            Available stations
+--------------------------------------------------------------------
+  Station   State         Scanning   Name
+--------------------------------------------------------------------
+  wlan0     connected     no         MyWiFi
+```
+
+3.扫描网络  
+
+```
+[iwd]# station wlan0 scan
+[iwd]# station wlan0 get-networks
+```
+
+输出示例：  
+
+```
+                               Available networks
+--------------------------------------------------------------------
+    Network name                    Security   Signal
+--------------------------------------------------------------------
+    HomeWiFi                        psk        ****
+    OfficeNetwork                   psk        ****
+    FreeWiFi                        open       ****
+```
+
+4.连接 WiFi
+
+```
+[iwd]# station wlan0 connect "HomeWiFi"
+```
+
+如果有密码，系统会提示输入密码：
+
+```
+Passphrase: [输入密码，输入不显示]
+```
+没有密码则直接连接
+
+5.检查连接状态
+
+```
+[iwd]# station wlan0 show
+```
+
+输出示例：  
+
+```
+Station: wlan0
+  State: connected
+  Connected network: HomeWiFi
+  IPv4 configuration: completed
+```
+
+6.退出 iwctl
+
+```
+[iwd]# exit
+```
+
+第二种方式(已知WiFi 名称和密码):  
+执行以下代码：
+
+```
+iwctl --passphrase "你的密码" station wlan0 connect "WiFi名称"
+```
+  
+  
+
+**4,运行AIFC安装脚本**
 
 在安装介质中输入一下代码并执行   
 
@@ -217,14 +307,33 @@ Enter choice (1-4):
 
 **5**. GRUB 配置
 
+如果你是在 BIOS（传统引导）系统中，GRUB 需要安装到磁盘的主引导记录（MBR） 或分区的引导扇区(不推荐安装到分区)，这时脚本会询问你要安装到的磁盘。   
+示例：   
+
+```
+[INFO] Installing bootloader...
+[WARN] Trying BIOS install...
+[INFO] Available disks:
+NAME        SIZE TYPE
+/dev/sda    100G disk
+/dev/sdb    500G disk
+
+Enter disk for BIOS (e.g., /dev/sda, not partition like /dev/sda1): /dev/sda
+注：这里输入的设备是磁盘，"TYPE"这一栏显示的要是"disk"，不推荐输入分区(TYPE是part)
+
+[INFO] Installing BIOS GRUB on /dev/sda...
+Installation finished. No error reported.
+[SUCCESS] BIOS GRUB installed
+```
+选择是否禁用watchdog:  
+
 ```
 Add watchdog blacklist? (y/N):
 ```
-
-· 说明: 询问是否在 GRUB 中禁用 watchdog   
-· 注：Watchdog（看门狗定时器）是一个硬件或软件机制，用于检测和恢复系统故障。当系统卡死时，Watchdog 会自动重启系统。   
+   
+· 说明：Watchdog（看门狗定时器）是一个硬件或软件机制，用于检测和恢复系统故障。当系统卡死时，Watchdog 会自动重启系统。   
 · 这里的选择看个人，一般有人的情况下可以禁用，如你自己用时；没有人的情况下不禁用，如服务器，物联网设备   
-· 选择: y (添加) 或 N (跳过)
+· 选择: y (禁用) 或 N (跳过)
 
 **6**. 阶段一结束提示
 
@@ -386,8 +495,8 @@ reboot
 #### 执行第三阶段脚本
 
 1,按下"Win"键(Command)  
-2,如果是KDE Plasma桌面，输入konsole并打开；  
-如果是GNOME桌面，输入ghostty并打开  
+2,如果是KDE Plasma桌面，输入konsole；  
+如果是GNOME桌面，输入ghostty
 3,再输入以下代码并执行   
 
 ```
@@ -644,3 +753,6 @@ XMODIFIERS=@im=fcitx5
 · 文件系统验证：自动验证 fstab 配置  
 · 服务状态检查：验证关键服务状态  
 · 安装清理：自动清理临时文件
+
+#### 拓展
+有兴趣的小伙伴可以参照这份[ArchLinux指南](https://github.com/SHORiN-KiWATA/ShorinArchExperience-ArchlinuxGuide)
