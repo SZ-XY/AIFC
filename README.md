@@ -1,5 +1,3 @@
-# Arch Installer For Chinese脚本
-
 ## 说在前面的
 
 ### 免责声明
@@ -18,7 +16,7 @@
 
 ## 使用方法
 
-**1**,进入Arch安装介质(具体步骤请自行搜索)  
+**1**,进入Arch安装介质(具体步骤请自行搜索,也可以在[ArchLinux指南](https://github.com/SHORiN-KiWATA/ShorinArchExperience-ArchlinuxGuide)中查看)  
 
 **2**,明确要作为根分区，交换分区和EFI分区(仅UEFI模式需要)的具体分区名称  
 · 可以输入"lsblk -p"查看分区  
@@ -181,14 +179,44 @@ curl -LO https://github.com/SZ-XY/AIFC/releases/download/v1.00/aifc.sh && ./aifc
 注：第一二阶段因为环境不支持显示中文，所以选项都是英文，第三阶段可以显示中文所以出现了中文
 
 #### 第一阶段脚本中的：  
-**1**. 初始确认
+**1**. 用户同意继续安装  
+刚开始运行脚本，会弹出英文版的免责声明，然后询问你是否明白并继续。  
 
 ```
-Start Arch installation? (y/N):
+========================================
+    Arch Linux Installer - v1.00
+    WARNING: DATA LOSS RISK
+========================================
+This script will FORMAT disks and DESTROY data.
+You could lose your files, operating systems, etc.
+
+BEFORE CONTINUING:
+Backup all important data
+Test in virtual machine first 
+Verify target disk selection
+Understand that you use at your own risk
+The authors are not responsible for any loss
+
+By continuing, you accept all risks and responsibilities.
+Full disclaimer: https://github.com/SZ-XY/AIFC/blob/main/DISCLAIMER.md 
+========================================
+
+Do you understand and wish to continue? (type 'I ACCEPT'):
+```
+请自行选择是否同意免责声明并继续安装，如果同意，输入"I ACCEPT",如：  
+
+```
+Do you understand and wish to continue? (type 'I ACCEPT'):I ACCEPT
+Warning acknowledged. Proceeding with installation...
+```
+然后继续。  
+如果不同意(直接回车)或输入错误(最好不要小写)，脚本会直接退出，如:  
+ 
+```
+Do you understand and wish to continue? (type 'I ACCEPT'): 
+Operation cancelled. No changes were made.
 ```
 
-· 说明: 确认开始安装过程
-· 选择: y (开始安装) 或 N (取消)
 
 **2**. 网络连接
 
