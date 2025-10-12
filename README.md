@@ -1,3 +1,5 @@
+# Arch Installer For Chinese脚本
+
 ## 说在前面的
 
 ### 免责声明
