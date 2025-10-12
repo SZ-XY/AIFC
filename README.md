@@ -1,3 +1,19 @@
+## 说在前面的
+
+### 免责声明
+
+警告：此脚本会格式化磁盘，可能导致数据丢失！
+
+· 使用前务必备份所有数据  
+· 建议先在虚拟机测试  
+· 用户自行承担使用风险  
+· 不提供任何担保  
+
+继续使用即表示您理解并接受上述风险。完整的免责声明见[DISCLAIMER.md](https://github.com/SZ-XY/AIFC/blob/main/DISCLAIMER.md)  
+
+如果是新手或者是想要进一步的用户，可以参考这份 [ArchLinux指南](https://github.com/SHORiN-KiWATA/ShorinArchExperience-ArchlinuxGuide)  
+里面的步骤很详细，可以加深你对ArchLinux的理解  
+
 ## 使用方法
 
 **1**,进入Arch安装介质(具体步骤请自行搜索)  
@@ -753,6 +769,3 @@ XMODIFIERS=@im=fcitx5
 · 文件系统验证：自动验证 fstab 配置  
 · 服务状态检查：验证关键服务状态  
 · 安装清理：自动清理临时文件
-
-#### 拓展
-有兴趣的小伙伴可以参照这份[ArchLinux指南](https://github.com/SHORiN-KiWATA/ShorinArchExperience-ArchlinuxGuide)
