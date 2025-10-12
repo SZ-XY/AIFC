@@ -13,8 +13,9 @@
 
 继续使用即表示您理解并接受上述风险。完整的免责声明见[DISCLAIMER.md](https://github.com/SZ-XY/AIFC/blob/main/DISCLAIMER.md)  
 
-如果是新手或者是想要进一步的用户，可以参考这份 [ArchLinux指南](https://github.com/SHORiN-KiWATA/ShorinArchExperience-ArchlinuxGuide)  
-里面的步骤很详细，可以加深你对ArchLinux的理解  
+### 请先了解一下基础知识
+如果是你是新手或者是想要进一步配置你的Archlinux，可以参考这份 [ArchLinux指南](https://github.com/SHORiN-KiWATA/ShorinArchExperience-ArchlinuxGuide)   
+这里面讲了很多步骤，也拓展了许多本脚本所没有的操作。
 
 ## 使用方法
 
