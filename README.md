@@ -1,4 +1,6 @@
-## 说在前面的
+# Arch Installer For Chinese 脚本
+
+## 写在前面的
 
 ### 免责声明
 
