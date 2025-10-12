@@ -1493,7 +1493,6 @@ main() {
     EFI_PARTITION=""
     EFI_REQUIRED=false
     
-    info "Starting Arch install..."
     
     read -p "Do you understand and wish to continue? (type 'I ACCEPT'): " acceptance
     if [ "$(echo "$acceptance" | tr '[:lower:]' '[:upper:]')" != "I ACCEPT" ]; then
