@@ -174,7 +174,7 @@ iwctl --passphrase "你的密码" station wlan0 connect "WiFi名称"
 在安装介质中输入一下代码并执行   
 
 ```
-curl -LO https://github.com/SZ-XY/AIFC/releases/download/v1.00/aifc.sh && ./aifc.sh
+curl -LO https://github.com/SZ-XY/AIFC/releases/download/v1.00/aifc.sh && bash aifc.sh
 ```
 
 ## 安装流程中的用户选择点及需要的操作  
@@ -801,4 +801,5 @@ XMODIFIERS=@im=fcitx5
 
 · 文件系统验证：自动验证 fstab 配置  
 · 服务状态检查：验证关键服务状态  
+
 · 安装清理：自动清理临时文件
