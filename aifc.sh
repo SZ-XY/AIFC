@@ -27,8 +27,24 @@ cleanup_script() {
 trap cleanup_script EXIT
 
 echo "========================================"
-echo "    Arch Linux Interactive Installer"
+echo "    Arch Linux Installer - v1.00"
+echo "    WARNING: DATA LOSS RISK"
 echo "========================================"
+echo "This script will FORMAT disks and DESTROY data."
+echo "You could lose your files, operating systems, etc."
+echo ""
+echo "BEFORE CONTINUING:"
+echo "Backup all important data"
+echo "Test in virtual machine first" 
+echo "Verify target disk selection"
+echo "Understand that you use at your own risk"
+echo "The authors are not responsible for any loss"
+echo ""
+echo "By continuing, you accept all risks and responsibilities."
+echo "Full disclaimer: https://github.com/SZ-XY/AIFC/blob/main/DISCLAIMER.md"
+echo "========================================"
+echo ""
+
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -1242,6 +1258,7 @@ info "Configuring archlinuxcn..."
 cat >> /etc/pacman.conf << 'ENDOFFILE'
 
 [archlinuxcn]
+SigLevel = Optional TrustedOnly
 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch 
 Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch 
 Server = https://mirrors.hit.edu.cn/archlinuxcn/$arch 
@@ -1478,10 +1495,13 @@ main() {
     
     info "Starting Arch install..."
     
-    if ! confirm "Start Arch installation?"; then
-        info "Cancelled"
-        exit 0
+    read -p "Do you understand and wish to continue? (type 'I ACCEPT'): " acceptance
+    if [ "$(echo "$acceptance" | tr '[:lower:]' '[:upper:]')" != "I ACCEPT" ]; then
+        echo "Operation cancelled. No changes were made."
+        exit 1
     fi
+    
+    echo "Warning acknowledged. Proceeding with installation..."
     
     connect_wifi
     setup_disk
